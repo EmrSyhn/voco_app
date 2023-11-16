@@ -18,6 +18,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Voco RiverPod App',
       routerConfig: router,
+      theme: ThemeData(useMaterial3: true),
     );
   }
 }

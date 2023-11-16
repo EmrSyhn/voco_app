@@ -7,7 +7,8 @@ import '../../src/view/splash/splash.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
-  routes: <RouteBase>[
+  navigatorKey: GlobalKey<NavigatorState>(),
+  routes: [
     GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
@@ -19,14 +20,12 @@ final GoRouter router = GoRouter(
       builder: (BuildContext context, GoRouterState state) {
         return const HomePage();
       },
-      routes: <RouteBase>[
-        GoRoute(
-          path: 'login',
-          builder: (BuildContext context, GoRouterState state) {
-            return const LoginForm();
-          },
-        ),
-      ],
+    ),
+    GoRoute(
+      path: '/login',
+      builder: (BuildContext context, GoRouterState state) {
+        return const LoginForm();
+      },
     ),
   ],
 );
