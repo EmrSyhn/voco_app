@@ -18,7 +18,7 @@ Bu proje, Riverpod kullanılarak MVC/MVC+S mimarisi kullanılarak geliştirilmi�
 
 ## Nasıl Çalıştırılır?
 
-1. Projeyi klonlayın: `git clone https://github.com/EmrSyhn/voco_app.git
+1. Projeyi klonlayın: `git clone https://github.com/EmrSyhn/voco_app.git`
 2. Proje dizinine gidin: `cd ../voco_app`
 3. Gerekli bağımlılıkları yükleyin: `flutter pub get`
 4. Uygulamayı çalıştırın: `flutter run`
