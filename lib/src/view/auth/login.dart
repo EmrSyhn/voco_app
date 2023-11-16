@@ -21,37 +21,34 @@ class LoginForm extends ConsumerWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
-              children: <Widget>[
-                TextFormField(
-                  controller: authStatus.emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                      labelText: 'E-mail', border: OutlineInputBorder()),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Lütfen e-mail adresinizi giriniz';
-                    }
-                    return null;
-                  },
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Card(
+                  child: textFieldWidget(
+                    controller: authStatus.emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    icon: Icons.email,
+                    labelText: 'E-mail',
+                  ),
                 ),
                 const SizedBox(height: 8.0),
-                TextFormField(
-                  controller: authStatus.passwordController,
-                  keyboardType: TextInputType.visiblePassword,
-                  decoration: const InputDecoration(
-                      labelText: 'Şifre', border: OutlineInputBorder()),
-                  obscureText: true,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Lütfen şifrenizi giriniz';
-                    }
-                    return null;
-                  },
+                Card(
+                  child: textFieldWidget(
+                    controller: authStatus.passwordController,
+                    keyboardType: TextInputType.visiblePassword,
+                    icon: Icons.password,
+                    labelText: 'Şifre',
+                    obscureText: true,
+                  ),
                 ),
                 const SizedBox(height: 8.0),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 48.0),
+                    elevation: 2, // Add elevation to the button
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
                   ),
                   child: const Text('Giriş Yap'),
                   onPressed: () async {
@@ -59,17 +56,14 @@ class LoginForm extends ConsumerWidget {
                       return;
                     }
 
-                    // Capture the context outside the async function
-
                     String? errorMessage = await authStatus.login(
                       authStatus.emailController.text,
                       authStatus.passwordController.text,
                     );
-                    final scaffoldContext = context;
 
                     if (context.mounted) {
                       if (errorMessage != null) {
-                        ScaffoldMessenger.of(scaffoldContext).showSnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(errorMessage),
                             backgroundColor: Colors.red,
@@ -85,5 +79,28 @@ class LoginForm extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  TextFormField textFieldWidget({
+    TextEditingController? controller,
+    TextInputType? keyboardType,
+    required IconData icon,
+    String? labelText,
+    bool obscureText = false,
+  }) {
+    return TextFormField(
+        controller: controller,
+        keyboardType: TextInputType.visiblePassword,
+        decoration: InputDecoration(
+            icon: Icon(icon), labelText: labelText, border: InputBorder.none),
+        obscureText: obscureText,
+        validator: globalValidator);
+  }
+
+  String? globalValidator(String? value) {
+    if (value!.isEmpty) {
+      return 'Lütfen bu alanı doldurunuz';
+    }
+    return null;
   }
 }
